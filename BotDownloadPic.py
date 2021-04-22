@@ -131,12 +131,6 @@ def main():
 
 if __name__ == "__main__":
     vk, upload, vk_session, longpoll = login(
-        '2a92dba96fef53121b7bf7de898e3b1691a477a86c96ba47a6c63e301c372c083e62ea4a2464c09a6eb1f')
+        '*********************')
     main()
 
-    id_lena = 304694139
-    id_zoya = 266765888
-    id_vanya = 298117150
-    id_ivan_2 = 221104785
-    id_denis = 155834988
-    id_moy = 222754285
