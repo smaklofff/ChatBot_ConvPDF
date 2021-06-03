@@ -33,4 +33,30 @@ __Полная версия: (bold)__
         preserve_order=1)
     ...
 ```
+При конвертации изоюражений используется популярная библиотека PIL:  
+```result[0].save("Photo_vk" + '\\' + name_of_pdf + '.pdf', save_all=True, append_images=result[1:len(list)])```  
+В метод .save передаются название документа и изображения, которые в нем должны находится.
+
+Для того, чтобы загрузить документ на сервера ВК, нужно следовать подробной [инструкции](https://vk.com/dev/upload_files_2?f=10.%2BЗагрузка%2Bдокументов), которая выложена на официальной странце ВК.  
+Ниже можно увидеть готовый вариант:
+```
+  def information_about_the_document(user_id, name):
+    """Загрузка документа на сервера вк"""
+
+    'Получение ссылки для загрузки вложения'
+    upload_url_document = vk.docs.getMessagesUploadServer(type='doc',
+                                                          peer_id=user_id)['upload_url']
+    'Обработка ответа'
+    request = requests.post(upload_url_document,
+                            files={'file': open('Photo_vk\\' + name + '.pdf', 'rb')}).json()['file']
+
+    'Получение данных о документе, который был сохранен на сервере'
+    document_information = vk.docs.save(file=request,
+                                        title=name)
+    document_information = 'doc' + str(document_information['doc']['owner_id']) + '_' + str(document_information['doc']['id'])
+    'Отправка документа'
+    send_msg(user_id, 'Вот твой PDF', document_information)
+```
+Далее готовый документ отправляется пользователю.
+
 ## Пример работы и возможности для улучшения 
